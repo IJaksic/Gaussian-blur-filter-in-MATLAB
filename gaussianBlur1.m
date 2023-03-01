@@ -1,9 +1,9 @@
 function gaussianBlur1(img_path,sigma)
     tic;
-    % Učitaj sliku
+    % Import image
     img = imread(img_path);
 
-    % Definiraj Gaussovu jezgru
+    % Defining Gaussian kernel
     hsize = 2*ceil(3*sigma)+1;
     h = zeros(hsize);
     for i=1:hsize
@@ -15,15 +15,15 @@ function gaussianBlur1(img_path,sigma)
     end
     h = h/sum(h(:));
 
-    % Primijeni Gaussovo zamućenje na svaki kanal zasebno
+    % Applying Gaussian blur on every RGB channel using conv2 function of 2D convolution
     red = conv2(double(img(:,:,1)), h, 'same');
     green = conv2(double(img(:,:,2)), h, 'same');
     blue = conv2(double(img(:,:,3)), h, 'same');
 
-    % Sastavi zamućene kanale u jednu sliku u boji
+    % Combining three resulting channels into new blured picture
     blurred = uint8(cat(3, red, green, blue));
 
-    % Prikazi izlaznu sliku
+    % Result showcase
     figure;
     subplot(1,2,1);
     imshow(img);
